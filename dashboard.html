@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>PFMS - Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-body" onload="loadDashboard()">
+
+  <header class="top-bar">
+    <h2>PFMS Dashboard</h2>
+    <div>
+      <select id="month-filter" onchange="updateDashboard()">
+        <option value="0">Jan</option><option value="1">Feb</option>
+        <option value="2">Mar</option><option value="3">Apr</option>
+        <option value="4">May</option><option value="5">Jun</option>
+        <option value="6">Jul</option><option value="7">Aug</option>
+        <option value="8">Sep</option><option value="9">Oct</option>
+        <option value="10">Nov</option><option value="11">Dec</option>
+      </select>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="budget-card">
+      <h3>Monthly Budget</h3>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input id="budget-input" type="number" placeholder="Enter monthly budget ₹" />
+        <button onclick="setBudget()">Set</button>
+      </div>
+      <div class="budget-progress">
+        <div id="budget-bar"></div>
+      </div>
+      <p id="budget-info" class="budget-info">No budget set for the selected month.</p>
+    </section>
+
+    <section class="charts-section">
+      <div class="chart-box">
+        <h3>Savings Trend (year)</h3>
+        <canvas id="lineChart"></canvas>
+      </div>
+
+      <div class="chart-box">
+        <h3>Expense Split (selected month)</h3>
+        <canvas id="pieChart"></canvas>
+      </div>
+    </section>
+
+    <section class="transaction-section">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <button class="add-btn" onclick="openPopup()">+ Add Transaction</button>
+      </div>
+
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Type</th><th>Category / Desc</th><th>Amount</th><th>Action</th></tr>
+          </thead>
+          <tbody id="transaction-table"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Popup -->
+  <div id="popup" class="popup-container" >
+    <div class="popup-box">
+      <h3>Add Transaction</h3>
+      <input id="tr-date" type="date"/>
+      <select id="tr-type" onchange="onTypeChange()">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+      <select id="tr-category">
+        <option>Food</option><option>Travel</option><option>Shopping</option>
+        <option>Bills</option><option>Others</option>
+      </select>
+      <input id="tr-desc" placeholder="Description (optional)"/>
+      <input id="tr-amount" type="number" placeholder="Amount ₹"/>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button onclick="saveTransaction()">Save</button>
+        <button class="cancel" onclick="closePopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
